@@ -4,7 +4,7 @@
 			"path": ".",
 			"includePath": [
 				"src/*",
-				"lib/*"
+				"lib/*/src/*"
 			]
 		}
 	],
