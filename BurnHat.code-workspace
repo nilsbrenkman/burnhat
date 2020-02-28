@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"includePath": [
+				"src/*",
+				"lib/*"
+			]
+		}
+	],
+	"settings": {
+		"extensions.ignoreRecommendations": true,
+		"cortex-debug.openocdPath": "${command:particle.getDebuggerOpenocdPath}",
+		"files.associations": {
+			"*.ino": "cpp",
+			"cstdlib": "cpp"
+		}
+	}
+}
