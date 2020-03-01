@@ -6,39 +6,39 @@
  */
 
 #include "application.h"
-#include "TM1637.h"
+#include "LedManager.h"
 
 #define ROTARYPIN A0
-#define CLK A4
-#define DIO A5
 
-void displayNumber(unsigned int number);
-
-TM1637 display(CLK, DIO);
-int8_t digits[] = {0x00, 0x00, 0x00, 0x00};
+LedManager * ledManager;
+int offset;
 
 void setup() {
   Serial.begin(9600);
-  display.set();
-  display.init();
+
+  offset = 0;
+
+  ledManager = new LedManager();
+  LedStrip * ledStrip;
+
+  ledStrip = new LedStrip(0, 10, false, false, 0);
+  ledStrip->setLedManager(ledManager);
+  ledManager->setLedStrip(0, ledStrip);
+  ledStrip = new LedStrip(10, 10, true, false, 0);
+  ledStrip->setLedManager(ledManager);
+  ledManager->setLedStrip(1, ledStrip);
+
 }
 
 void loop() {
   int analogValue = analogRead(ROTARYPIN);
   int voltage = 3300 * analogValue / 4096;
-  displayNumber(voltage);
+  Serial.print("Voltage: ");
   Serial.println(voltage);
-  delay(1000);
+
+  ledManager->doProgramWithOffset(2, offset, false);
+  offset = offset + 1;
+
+  delay(25);
 }
 
-void displayNumber(unsigned int number) {
-  if (number > 9999) {
-    number = 9999;
-  }
-  
-  digits[0] = number / 1000;
-  digits[1] = number % 1000 / 100;
-  digits[2] = number % 100 / 10;
-  digits[3] = number % 10;
-  display.display(digits);
-}
