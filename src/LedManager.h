@@ -26,17 +26,13 @@ class LedManager {
     LedManager();
     void setLedStrip(int i, LedStrip * ledStrip);
     void show();
-    void setLed(int led, int color);
-    void setLedWithColor(int led, CRGB color);
-    void setLedWithHue(int led, int hue);
+    void setLedColor(int led, CRGB color);
+    void setLedHue(int led, int hue);
     void setBrightness(int b);
     void setBrightnessPersistent(int b, bool relative);
-    void setAllLeds(int color);
+    void setAllLeds(CRGB color);
     void clearAll();
     void doProgram(AbstractProgram * program);
-    bool doProgramWithOffset(int program, int offset, bool andOr);
-    bool doProgramWithColorAndOffset(int program, int color, int offset, bool andOr);
-    bool doTraceWithTrail(int strip, int offset, int hue, bool inverse);
     void fadeToBlack();
   private:
     unsigned long combineDataFields(int data1, int data2, int data3);
