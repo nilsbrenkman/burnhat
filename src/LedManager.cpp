@@ -8,8 +8,13 @@
 LedManager::LedManager() {
   FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, 20)
          .setCorrection(TypicalLEDStrip);
-  FastLED.setBrightness(5);
-  
+  FastLED.setBrightness(3);
+
+  for (int i = 0; i < 20; i++) {
+    leds[i] = CRGB::Red;
+  }
+  FastLED.show();
+
   myOrange = blend(CRGB::Orange, CRGB::Red, 100);
 }
 

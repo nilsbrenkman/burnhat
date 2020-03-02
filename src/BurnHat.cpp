@@ -12,25 +12,22 @@
 
 #include "application.h"
 #include "LedManager.h"
-// #include "FastLED.h"
-
-// FASTLED_USING_NAMESPACE;
+#include "AbstractProgram.h"
+#include "Rainbow.h"
 
 void setup();
 void loop();
-#line 14 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#line 13 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 #define ROTARYPIN A0
 
-// void setLedWithColor(int i, CRGB color);
-
 LedManager * ledManager;
-int offset;
-// CRGB leds[20];
+AbstractProgram * program;
+
+int programid = 0;
+int buttonid = 0;
 
 void setup() {
   Serial.begin(9600);
-
-  offset = 0;
 
   ledManager = new LedManager();
   LedStrip * ledStrip;
@@ -42,17 +39,23 @@ void setup() {
   ledStrip->setLedManager(ledManager);
   ledManager->setLedStrip(1, ledStrip);
 
+  program = new Rainbow();
+  program->init(ledManager);
 }
 
 void loop() {
   int analogValue = analogRead(ROTARYPIN);
-  int voltage = 3300 * analogValue / 4096;
-  Serial.print("Voltage: ");
-  Serial.println(voltage);
-
-  ledManager->doProgramWithOffset(2, offset, false);
-  offset = offset + 1;
-
-  delay(25);
+  int newbutton = 10 * analogValue / 4096;
+  if (newbutton != buttonid) {
+    Serial.print("Button: ");
+    Serial.println(newbutton);
+    buttonid = newbutton;
+    if (program != NULL) {
+      program->sleeve(buttonid);
+    }
+  }
+  if (program != NULL) {
+    program->loop();
+  }
 }
 
