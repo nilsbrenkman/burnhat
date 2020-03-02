@@ -24,12 +24,8 @@ void setup() {
   ledManager = new LedManager();
   LedStrip * ledStrip;
 
-  ledStrip = new LedStrip(0, 10, false, false, 0);
-  ledStrip->setLedManager(ledManager);
-  ledManager->setLedStrip(0, ledStrip);
-  ledStrip = new LedStrip(10, 10, true, false, 0);
-  ledStrip->setLedManager(ledManager);
-  ledManager->setLedStrip(1, ledStrip);
+  ledStrip = new LedStrip(ledManager, 0, 0, 10, false);
+  ledStrip = new LedStrip(ledManager, 1, 10, 10, true);
 
   program = new Rainbow();
   program->init(ledManager);

@@ -83,6 +83,13 @@ void LedManager::clearAll() {
   FastLED.show();
 }
 
+void LedManager::doProgram(AbstractProgram * program) {
+  for (int i = 0; i < NUMBER_OF_LEDSTRIPS; i++) {
+    program->doProgram(ledStrip[i]);
+  }
+  FastLED.show();
+}
+
 bool LedManager::doProgramWithOffset(int program, int offset, bool andOr) {
   return doProgramWithColorAndOffset(program, 0, offset, andOr);
 }

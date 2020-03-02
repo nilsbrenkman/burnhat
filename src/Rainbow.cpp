@@ -10,8 +10,17 @@ Rainbow::Rainbow() {
 
 void Rainbow::loop() {
   if (doEvent(5 * pow(2, speed))) {
-    ledManager->doProgramWithOffset(2, offset, false);
+    // ledManager->doProgramWithOffset(2, offset, false);
+    ledManager->doProgram(this);
     state == 0 ? offset++ : offset--;
+  }
+}
+
+void Rainbow::doProgram(LedStrip * ledStrip) {
+  int hue = offset;
+  for (int i = 0; i < ledStrip->getSize(); i++) {
+    ledStrip->setLedHue(i, hue);
+    hue += 5;
   }
 }
 

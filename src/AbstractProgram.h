@@ -12,6 +12,7 @@ class AbstractProgram {
   public:
     void init(LedManager * ledManager);
     virtual void loop();
+    virtual void doProgram(LedStrip * ledStrip);
     virtual void clear();
     virtual void sleeve(int buttonid);
     virtual void infrared(int value);

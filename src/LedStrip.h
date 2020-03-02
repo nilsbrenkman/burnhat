@@ -11,8 +11,9 @@ class LedManager;
 
 class LedStrip {
   public:
-    LedStrip(int start, int size, bool inverse, bool left, int position);
-    void setLedManager(LedManager * ledManager);
+    LedStrip(LedManager * ledManager, int position, int start, int size, bool inverse);
+    int getSize();
+    void setLedHue(int i, int hue);
     void doRainbow(int offset);
     void doGradient(int offset);
     bool doExplosion(int offset, int const *colorScheme);

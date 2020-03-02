@@ -1,17 +1,28 @@
 #include "LedStrip.h"
 
-LedStrip::LedStrip(int st, int si, bool inv, bool lf, int pos) {
+LedStrip::LedStrip(LedManager * lm, int pos, int st, int si, bool inv) {
+  ledManager = lm;
+  position = pos;
   start = st;
   size = si;
   inverse = inv;
-  left = lf;
-  position = pos;
+  left = false;
+  ledManager->setLedStrip(position, this);
   ledStripOffset = 0;
   ledStripInverse = false;
 }
 
-void LedStrip::setLedManager(LedManager * lm) {
-  ledManager = lm;
+int LedStrip::getSize() {
+  return size;
+}
+
+void LedStrip::setLedHue(int led, int hue) {
+  if (led < 0 || led >= size) return; // Don't change another strip's leds
+  if (inverse) {
+    ledManager->setLedWithHue(start + size - led - 1, hue);
+  } else {
+    ledManager->setLedWithHue(start + led, hue);
+  }
 }
 
 void LedStrip::setLed(int led, int color) {
@@ -31,8 +42,6 @@ void LedStrip::doRainbow(int offset) {
 }
 
 void LedStrip::doGradient(int offset) {
-  Serial.print("Gradient with offset: ");
-  Serial.println(offset);
   int hue = offset;
   if (left) hue -= 5;
   for (int i = 0; i < size; i++) {

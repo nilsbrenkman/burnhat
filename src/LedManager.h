@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include "LedStrip.h"
+#include "AbstractProgram.h"
 #include "FastLED.h"
 
 FASTLED_USING_NAMESPACE;
@@ -18,6 +19,8 @@ const int COLOR_SCHEME_BLUE_2[13] = {12, 6, 7, 6, 7, 6, 7, 6, 7, 6, 7, 6, 7};
 
 class LedStrip;
 
+class AbstractProgram;
+
 class LedManager {
   public:
     LedManager();
@@ -30,6 +33,7 @@ class LedManager {
     void setBrightnessPersistent(int b, bool relative);
     void setAllLeds(int color);
     void clearAll();
+    void doProgram(AbstractProgram * program);
     bool doProgramWithOffset(int program, int offset, bool andOr);
     bool doProgramWithColorAndOffset(int program, int color, int offset, bool andOr);
     bool doTraceWithTrail(int strip, int offset, int hue, bool inverse);

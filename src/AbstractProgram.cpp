@@ -8,6 +8,10 @@ void AbstractProgram::loop() {
   // do nothing
 }
 
+void AbstractProgram::doProgram(LedStrip * ledStrip) {
+  // do nothing
+}
+
 void AbstractProgram::clear() {
   ledManager->clearAll();
 }

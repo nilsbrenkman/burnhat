@@ -8,6 +8,7 @@ class Rainbow : public AbstractProgram {
   public:
     Rainbow();
     void loop();
+    void doProgram(LedStrip * ledStrip);
     void sleeve(int buttonid);
 };
 
