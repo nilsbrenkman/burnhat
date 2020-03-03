@@ -8,7 +8,7 @@ class Sparkle : public AbstractProgram {
   public:
     Sparkle();
     void loop();
-    void sleeve(int buttonid);
+    void button(Button button);
   private:
     int led;
     int mode;

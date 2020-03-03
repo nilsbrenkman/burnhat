@@ -45,10 +45,10 @@ void Sparkle::loop() {
   }
 }
 
-void Sparkle::sleeve(int buttonid) {
-  switch (buttonid) {
-    case 3: mode = 0; break;
-    case 4: mode = 1; break;
+void Sparkle::button(Button button) {
+  switch (button) {
+    case Button::UP:   mode = 0; break;
+    case Button::DOWN: mode = 1; break;
     default: break;
   }
 }

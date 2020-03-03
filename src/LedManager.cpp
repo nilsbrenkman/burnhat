@@ -8,7 +8,7 @@
 LedManager::LedManager() {
   FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, 20)
          .setCorrection(TypicalLEDStrip);
-  setBrightnessPersistent(2, false);
+  setBrightnessPersistent(1, false);
 
   for (int i = 0; i < 20; i++) {
     leds[i] = CRGB::Red;

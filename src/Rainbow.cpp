@@ -3,16 +3,13 @@
 Rainbow::Rainbow() {
   Serial.println("Rainbow started");
   speed = 2; // 0-4, 0 being fast
-  timeout = 0;
-  offset = 0;
-  state = 0;
+  direction = UP;
 }
 
 void Rainbow::loop() {
   if (doEvent(5 * pow(2, speed))) {
-    // ledManager->doProgramWithOffset(2, offset, false);
     ledManager->doProgram(this);
-    state == 0 ? offset++ : offset--;
+    direction == UP ? offset++ : offset--;
   }
 }
 
@@ -20,16 +17,39 @@ void Rainbow::doProgram(LedStrip * ledStrip) {
   int hue = offset;
   for (int i = 0; i < ledStrip->getSize(); i++) {
     ledStrip->setLedHue(i, hue);
-    hue += 5;
+    hue -= 5;
   }
 }
 
-void Rainbow::sleeve(int buttonid) {
-  if (buttonid < 5) {
-    speed = buttonid;
-    state = -1;
-  } else {
-    speed = 9 - buttonid;
-    state = 0;
+void Rainbow::button(Button button) {
+  switch (button) {
+    case Button::LEFT:
+      if (direction == UP) {
+        if (speed == 4) {
+          Serial.println("Going DOWN");
+          direction = DOWN;
+        } else {
+          speed++;
+        }
+      } else {
+        if (speed > 0) {
+          speed--;
+        }
+      }
+      break;
+    case Button::RIGHT:
+      if (direction == DOWN) {
+        if (speed == 4) {
+          Serial.println("Going UP");
+          direction = UP;
+        } else {
+          speed++;
+        }
+      } else {
+        if (speed > 0) {
+          speed--;
+        }
+      }
+      break;
   }
 }

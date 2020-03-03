@@ -3,6 +3,7 @@
 
 #include "LedManager.h"
 #include "LedStrip.h"
+#include "Constants.h"
 
 class LedManager;
 
@@ -14,12 +15,7 @@ class AbstractProgram {
     virtual void loop();
     virtual void doProgram(LedStrip * ledStrip);
     virtual void clear();
-    virtual void sleeve(int buttonid);
-    virtual void infrared(int value);
-    virtual void mode(char letter);
-    virtual void rf(int senderId, int data1, int data2, int data3);
-    virtual bool isMaster();
-    virtual void selectMasterMode(int buttonid);
+    virtual void button(Button button);
   protected:
     bool doEvent(int delay);
     LedManager * ledManager;

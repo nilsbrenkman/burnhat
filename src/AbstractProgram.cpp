@@ -16,27 +16,7 @@ void AbstractProgram::clear() {
   ledManager->clearAll();
 }
 
-void AbstractProgram::sleeve(int buttonid) {
-  // do nothing
-}
-
-void AbstractProgram::infrared(int value) {
-  // do nothing
-}
-
-void AbstractProgram::mode(char letter) {
-  // do nothing
-}
-
-void AbstractProgram::rf(int senderId, int data1, int data2, int data3) {
-  // do nothing
-}
-
-bool AbstractProgram::isMaster() {
-  return false;
-}
-
-void AbstractProgram::selectMasterMode(int buttonid) {
+void AbstractProgram::button(Button button) {
   // do nothing
 }
 

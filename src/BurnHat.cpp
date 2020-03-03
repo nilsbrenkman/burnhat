@@ -13,6 +13,7 @@
 #include "application.h"
 #include "LedManager.h"
 #include "AbstractProgram.h"
+#include "Constants.h"
 #include "Rainbow.h"
 #include "Sparkle.h"
 
@@ -20,7 +21,7 @@ void setup();
 void loop();
 void loadProgram();
 void readInput();
-#line 14 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#line 15 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 #define BUTTONPIN D2
 #define ROTARYPIN A0
 
@@ -59,8 +60,6 @@ void loadProgram() {
     program->clear();
     delete program;
   }
-  Serial.print("Loading program: ");
-  Serial.println(programid);
   switch (programid) {
     case 0: program = new Rainbow();      break;
     case 1: program = new Sparkle();      break;
@@ -75,12 +74,16 @@ void readInput() {
   int analogValue = analogRead(ROTARYPIN);
   int newbutton = 10 * analogValue / 4096;
   if (newbutton != buttonid) {
-    Serial.print("Button: ");
-    Serial.println(newbutton);
-    buttonid = newbutton;
     if (program != NULL) {
-      program->sleeve(buttonid);
+      if (newbutton > buttonid) {
+        Serial.println("Button: LEFT");
+        program->button(Button::LEFT);
+      } else {
+        Serial.println("Button: RIGHT");
+        program->button(Button::RIGHT);
+      }
     }
+    buttonid = newbutton;
   }
 
   if (digitalRead(BUTTONPIN) == 1) {
