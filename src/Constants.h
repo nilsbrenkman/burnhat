@@ -1,6 +1,10 @@
 #ifndef Constants_H
 #define Constants_H
 
+#include "FastLED.h"
+
+FASTLED_USING_NAMESPACE;
+
 enum class Button {
     NUM_0,
     NUM_1,
@@ -19,5 +23,10 @@ enum class Button {
     LEFT,
     RIGHT
 };
+
+const CRGB myOrange = blend(CRGB::Orange, CRGB::Red, 100);
+
+const CRGB COLOR_SCHEME_RED[3] =  {CRGB::Red, myOrange, CRGB::Yellow};
+const CRGB COLOR_SCHEME_BLUE[3] = {CRGB::Green, CRGB::Blue, CRGB::Purple};
 
 #endif

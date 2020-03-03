@@ -17,6 +17,8 @@ class Rainbow : public AbstractProgram {
     void button(Button button);
   private:
     Direction direction;
+    int offset;
+    int speed;
 };
 
 #endif

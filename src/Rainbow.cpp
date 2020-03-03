@@ -2,6 +2,7 @@
 
 Rainbow::Rainbow() {
   Serial.println("Rainbow started");
+  offset = 0;
   speed = 2; // 0-4, 0 being fast
   direction = UP;
 }

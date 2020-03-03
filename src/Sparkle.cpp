@@ -19,8 +19,10 @@ void Sparkle::loop() {
             ledManager->setLedColor(led, CRGB::White);
             break;
           case 1:
-            int c = rand() % 6;
-            // ledManager->setLed(led, c + 2);
+            ledManager->setLedColor(led, COLOR_SCHEME_RED[rand() % 3]);
+            break;
+          case 2:
+            ledManager->setLedColor(led, COLOR_SCHEME_BLUE[rand() % 3]);
             break;
         }
         timeout = now + 100;
@@ -47,8 +49,8 @@ void Sparkle::loop() {
 
 void Sparkle::button(Button button) {
   switch (button) {
-    case Button::UP:   mode = 0; break;
-    case Button::DOWN: mode = 1; break;
+    case Button::LEFT:  mode = (mode - 1) % 3; break;
+    case Button::RIGHT: mode = (mode + 1) % 3; break;
     default: break;
   }
 }

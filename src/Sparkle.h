@@ -11,6 +11,7 @@ class Sparkle : public AbstractProgram {
     void button(Button button);
   private:
     int led;
+    int state;
     int mode;
 };
 

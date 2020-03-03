@@ -15,7 +15,6 @@ LedManager::LedManager() {
   }
   FastLED.show();
 
-  myOrange = blend(CRGB::Orange, CRGB::Red, 100);
 }
 
 void LedManager::setLedStrip(int i, LedStrip * ls) {
