@@ -64,13 +64,20 @@ void LedManager::setAllLeds(CRGB color) {
 
 void LedManager::clearAll() {
   setBrightness( pow((brightness / 5.0), 2) * 255 );
-  setAllLeds(0);
+  setAllLeds(CRGB::Black);
   FastLED.show();
 }
 
 void LedManager::doProgram(AbstractProgram * program) {
   for (int i = 0; i < NUMBER_OF_LEDSTRIPS; i++) {
     program->doProgram(ledStrip[i]);
+  }
+  FastLED.show();
+}
+
+void LedManager::doAction(AbstractAction * action) {
+  for (int i = 0; i < NUMBER_OF_LEDSTRIPS; i++) {
+    action->doAction(ledStrip[i]);
   }
   FastLED.show();
 }

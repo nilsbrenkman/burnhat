@@ -4,6 +4,7 @@
 #include <math.h>
 #include "LedStrip.h"
 #include "AbstractProgram.h"
+#include "AbstractAction.h"
 #include "FastLED.h"
 
 FASTLED_USING_NAMESPACE;
@@ -13,8 +14,8 @@ const int NUMBER_OF_LEDSTRIPS   = 2;
 const int MAX_LEDS_PER_LEDSTRIP = 10;
 
 class LedStrip;
-
 class AbstractProgram;
+class AbstractAction;
 
 class LedManager {
   public:
@@ -28,6 +29,7 @@ class LedManager {
     void setAllLeds(CRGB color);
     void clearAll();
     void doProgram(AbstractProgram * program);
+    void doAction(AbstractAction * action);
     void fadeToBlack();
   private:
     unsigned long combineDataFields(int data1, int data2, int data3);

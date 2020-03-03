@@ -9,6 +9,10 @@ LedStrip::LedStrip(LedManager * lm, int pos, int st, int si, bool inv) {
   ledManager->setLedStrip(position, this);
 }
 
+int LedStrip::getPosition() {
+  return position;
+}
+
 int LedStrip::getSize() {
   return size;
 }

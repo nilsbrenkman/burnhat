@@ -8,10 +8,12 @@
 #include "application.h"
 #include "LedManager.h"
 #include "AbstractProgram.h"
+#include "AbstractAction.h"
 #include "Constants.h"
 #include "Rainbow.h"
 #include "Sparkle.h"
 #include "Randomised.h"
+#include "Explosion.h"
 
 #define BUTTONPIN D2
 #define ROTARYPIN A0
@@ -84,5 +86,15 @@ void readInput() {
     buttonPressed = false;
     programid = (programid + 1) % 3;
     loadProgram();
+    
+    // AbstractAction * action = new Explosion();
+    // action->init(ledManager);
+    // ledManager->clearAll();
+    // while (action->run()) {
+    //   delay(25);
+    // }
+    // action->clear();
+    // delete action;
+    
   }
 }

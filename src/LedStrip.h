@@ -12,6 +12,7 @@ class LedManager;
 class LedStrip {
   public:
     LedStrip(LedManager * ledManager, int position, int start, int size, bool inverse);
+    int getPosition();
     int getSize();
     void setLedColor(int led, CRGB color);
     void setLedHue(int led, int hue);
