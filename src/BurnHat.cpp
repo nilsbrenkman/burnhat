@@ -16,12 +16,13 @@
 #include "Constants.h"
 #include "Rainbow.h"
 #include "Sparkle.h"
+#include "Randomised.h"
 
 void setup();
 void loop();
 void loadProgram();
 void readInput();
-#line 15 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#line 16 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 #define BUTTONPIN D2
 #define ROTARYPIN A0
 
@@ -61,8 +62,9 @@ void loadProgram() {
     delete program;
   }
   switch (programid) {
-    case 0: program = new Rainbow();      break;
-    case 1: program = new Sparkle();      break;
+    case 0: program = new Rainbow();    break;
+    case 1: program = new Sparkle();    break;
+    case 2: program = new Randomised(); break;
     default: break;
   }
   if (program != NULL) {
@@ -90,7 +92,7 @@ void readInput() {
     buttonPressed = true;
   } else if (buttonPressed) {
     buttonPressed = false;
-    programid = (programid + 1) % 2;
+    programid = (programid + 1) % 3;
     loadProgram();
   }
 }
