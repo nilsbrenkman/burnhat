@@ -11,6 +11,7 @@
  */
 
 #include "application.h"
+#include "IRremote.h"
 #include "LedManager.h"
 #include "AbstractProgram.h"
 #include "AbstractAction.h"
@@ -23,13 +24,18 @@
 void setup();
 void loop();
 void loadProgram();
+void readInfrared();
 void readInput();
-#line 18 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
-#define BUTTONPIN D2
-#define ROTARYPIN A0
+#line 19 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#define BUTTON_PIN D2
+#define ROTARY_PIN A0
+#define IR_RECEIVE_PIN D7
 
 LedManager * ledManager;
 AbstractProgram * program;
+
+IRrecv irrecv(IR_RECEIVE_PIN);
+decode_results results;
 
 int programid = 0;
 int buttonid = 0;
@@ -38,7 +44,9 @@ boolean buttonPressed = false;
 void setup() {
   Serial.begin(9600);
 
-  pinMode(BUTTONPIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT);
+
+  irrecv.enableIRIn(); // Start the receiver
 
   ledManager = new LedManager();
   LedStrip * ledStrip;
@@ -53,6 +61,7 @@ void setup() {
 
 void loop() {
   readInput();
+  readInfrared();
   if (program != NULL) {
     program->loop();
   }
@@ -74,8 +83,15 @@ void loadProgram() {
   }
 }
 
+void readInfrared() {
+  if (irrecv.decode(&results)) {
+    Serial.println(results.value, HEX);
+    irrecv.resume(); // Receive the next value
+  }
+}
+
 void readInput() {
-  int analogValue = analogRead(ROTARYPIN);
+  int analogValue = analogRead(ROTARY_PIN);
   int newbutton = 10 * analogValue / 4096;
   if (newbutton != buttonid) {
     if (program != NULL) {
@@ -90,7 +106,7 @@ void readInput() {
     buttonid = newbutton;
   }
 
-  if (digitalRead(BUTTONPIN) == 1) {
+  if (digitalRead(BUTTON_PIN) == 1) {
     buttonPressed = true;
   } else if (buttonPressed) {
     buttonPressed = false;
