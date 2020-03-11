@@ -16,6 +16,19 @@
 #include "Randomised.h"
 #include "Explosion.h"
 
+#include "afrored.h"
+
+const int IR_MSG_LENGTH   = 8;
+const int IR_CARRIER_FREQ = 38000;
+const int ir_cooldown     = 100;
+const int PIN_IR_LED      = D2;
+const int PIN_IR_RECEIVER = D7;
+
+afrored infrared(IR_MSG_LENGTH, IR_CARRIER_FREQ);
+void ISR_infrared() { infrared.ISR(); }
+
+int time_last_irmsg = 0;
+
 #define BUTTON_PIN D2
 #define ROTARY_PIN A0
 #define IR_RECEIVE_PIN D7
@@ -23,8 +36,8 @@
 LedManager * ledManager;
 AbstractProgram * program;
 
-IRrecv irrecv(IR_RECEIVE_PIN);
-decode_results results;
+// IRrecv irrecv(IR_RECEIVE_PIN);
+// decode_results results;
 
 int programid = 0;
 int buttonid = 0;
@@ -35,7 +48,10 @@ void setup() {
 
   pinMode(BUTTON_PIN, INPUT);
 
-  irrecv.enableIRIn(); // Start the receiver
+  attachInterrupt(PIN_IR_RECEIVER, ISR_infrared, CHANGE);
+  infrared.attachreceiver(PIN_IR_RECEIVER, ISR_infrared);
+
+  // irrecv.enableIRIn(); // Start the receiver
 
   ledManager = new LedManager();
   LedStrip * ledStrip;
@@ -53,7 +69,8 @@ void setup() {
 
 void loop() {
   readInput();
-  readInfrared();
+  // readInfrared();
+  doInfraredReceive();
   if (program != NULL) {
     program->loop();
   }
@@ -75,12 +92,12 @@ void loadProgram() {
   }
 }
 
-void readInfrared() {
-  if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
-    irrecv.resume(); // Receive the next value
-  }
-}
+// void readInfrared() {
+//   if (irrecv.decode(&results)) {
+//     Serial.println(results.value, HEX);
+//     irrecv.resume(); // Receive the next value
+//   }
+// }
 
 void readInput() {
   int analogValue = analogRead(ROTARY_PIN);
@@ -114,5 +131,19 @@ void readInput() {
     // action->clear();
     // delete action;
     
+  }
+}
+
+void doInfraredReceive() {
+  if (infrared.isnewmsg) {
+    if (infrared.checkmsg()) {
+      int data = infrared.getmsg();
+      Serial.print("Infrared in: ");
+      Serial.println(data);
+      time_last_irmsg = millis();
+    }
+  }
+  if (millis() > time_last_irmsg + ir_cooldown) {
+    attachInterrupt(PIN_IR_RECEIVER, ISR_infrared, CHANGE);
   }
 }
