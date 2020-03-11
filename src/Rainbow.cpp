@@ -22,6 +22,11 @@ void Rainbow::doProgram(LedStrip * ledStrip) {
   }
 }
 
+void Rainbow::clear() {
+  ledManager->clearAll();
+  delete this;
+}
+
 void Rainbow::button(Button button) {
   switch (button) {
     case Button::DOWN:

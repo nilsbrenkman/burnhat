@@ -14,6 +14,7 @@ class Rainbow : public AbstractProgram {
     Rainbow();
     void loop();
     void doProgram(LedStrip * ledStrip);
+    void clear();
     void button(Button button);
   private:
     Direction direction;

@@ -11,7 +11,3 @@ boolean AbstractAction::run() {
 void AbstractAction::doAction(LedStrip * ledStrip) {
   // do nothing
 }
-
-void AbstractAction::clear() {
-  ledManager->clearAll();
-}

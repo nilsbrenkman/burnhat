@@ -29,3 +29,8 @@ void Explosion::doAction(LedStrip * ledStrip) {
     }
   }
 }
+
+void Explosion::clear() {
+  ledManager->clearAll();
+  delete this;
+}

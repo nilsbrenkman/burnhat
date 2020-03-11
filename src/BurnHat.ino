@@ -42,11 +42,10 @@ void setup() {
   infrared.attachreceiver(IR_RECEIVE_PIN, ISR_infrared);
 
   ledManager = new LedManager();
-  LedStrip * ledStrip;
 
   bool reverse = true;
   for (int i = 0; i < 8; i++) {
-    ledStrip = new LedStrip(ledManager, i, i * 8, 8, reverse);
+    new LedStrip(ledManager, i, i * 8, 8, reverse);
     reverse = ! reverse;
   }
 
@@ -63,7 +62,7 @@ void loop() {
 void loadProgram(Button button) {
   if (program != NULL) {
     program->clear();
-    delete program;
+    program = NULL;
   }
   switch (button) {
     case Button::NUM_1: program = new Rainbow();    break;

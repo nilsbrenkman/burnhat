@@ -8,6 +8,7 @@ class Randomised : public AbstractProgram {
     Randomised();
     void loop();
     void doProgram(LedStrip * ledStrip);
+    void clear();
   private:
     int offset;
 };

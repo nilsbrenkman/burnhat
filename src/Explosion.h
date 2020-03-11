@@ -9,6 +9,7 @@ class Explosion : public AbstractAction {
     Explosion();
     boolean run();
     void doAction(LedStrip * ledStrip);
+    void clear();
   private:
     int originX;
     int originY;

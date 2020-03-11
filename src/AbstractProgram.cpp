@@ -13,10 +13,6 @@ void AbstractProgram::doProgram(LedStrip * ledStrip) {
   // do nothing
 }
 
-void AbstractProgram::clear() {
-  ledManager->clearAll();
-}
-
 void AbstractProgram::button(Button button) {
   // do nothing
 }
