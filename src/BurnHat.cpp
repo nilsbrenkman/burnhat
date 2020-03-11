@@ -11,7 +11,7 @@
  */
 
 #include "application.h"
-#include "IRremote.h"
+#include "afrored.h"
 #include "LedManager.h"
 #include "AbstractProgram.h"
 #include "AbstractAction.h"
@@ -21,49 +21,37 @@
 #include "Randomised.h"
 #include "Explosion.h"
 
-#include "afrored.h"
-
 void ISR_infrared();
 void setup();
 void loop();
-void loadProgram();
-void readInput();
-void doInfraredReceive();
-#line 21 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
-const int IR_MSG_LENGTH   = 8;
-const int IR_CARRIER_FREQ = 38000;
-const int ir_cooldown     = 100;
-const int PIN_IR_LED      = D2;
-const int PIN_IR_RECEIVER = D7;
-
-afrored infrared(IR_MSG_LENGTH, IR_CARRIER_FREQ);
-void ISR_infrared() { infrared.ISR(); }
-
-int time_last_irmsg = 0;
-
+void loadProgram(Button button);
+void readInfrared();
+Button getButton(int infrared);
+#line 19 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 #define BUTTON_PIN D2
 #define ROTARY_PIN A0
 #define IR_RECEIVE_PIN D7
 
+const int IR_MSG_LENGTH   = 8;
+const int IR_CARRIER_FREQ = 38000;
+const int IR_COOLDOWN     = 100;
+const int POUND_COOLDOWN  = 2000;
+
 LedManager * ledManager;
 AbstractProgram * program;
+afrored infrared(IR_MSG_LENGTH, IR_CARRIER_FREQ);
+void ISR_infrared() { infrared.ISR(); }
 
-// IRrecv irrecv(IR_RECEIVE_PIN);
-// decode_results results;
-
-int programid = 0;
-int buttonid = 0;
-boolean buttonPressed = false;
+system_tick_t timeLastIrMsg = 0;
+system_tick_t timeButtonPound = 0;
 
 void setup() {
   Serial.begin(9600);
 
   pinMode(BUTTON_PIN, INPUT);
 
-  attachInterrupt(PIN_IR_RECEIVER, ISR_infrared, CHANGE);
-  infrared.attachreceiver(PIN_IR_RECEIVER, ISR_infrared);
-
-  // irrecv.enableIRIn(); // Start the receiver
+  attachInterrupt(IR_RECEIVE_PIN, ISR_infrared, CHANGE);
+  infrared.attachreceiver(IR_RECEIVE_PIN, ISR_infrared);
 
   ledManager = new LedManager();
   LedStrip * ledStrip;
@@ -74,29 +62,25 @@ void setup() {
     reverse = ! reverse;
   }
 
-  loadProgram();
-  program = new Rainbow();
-  program->init(ledManager);
+  loadProgram(Button::NUM_1);
 }
 
 void loop() {
-  readInput();
-  // readInfrared();
-  doInfraredReceive();
+  readInfrared();
   if (program != NULL) {
     program->loop();
   }
 }
 
-void loadProgram() {
+void loadProgram(Button button) {
   if (program != NULL) {
     program->clear();
     delete program;
   }
-  switch (programid) {
-    case 0: program = new Rainbow();    break;
-    case 1: program = new Sparkle();    break;
-    case 2: program = new Randomised(); break;
+  switch (button) {
+    case Button::NUM_1: program = new Rainbow();    break;
+    case Button::NUM_2: program = new Sparkle();    break;
+    case Button::NUM_3: program = new Randomised(); break;
     default: break;
   }
   if (program != NULL) {
@@ -104,58 +88,41 @@ void loadProgram() {
   }
 }
 
-// void readInfrared() {
-//   if (irrecv.decode(&results)) {
-//     Serial.println(results.value, HEX);
-//     irrecv.resume(); // Receive the next value
-//   }
-// }
-
-void readInput() {
-  int analogValue = analogRead(ROTARY_PIN);
-  int newbutton = 10 * analogValue / 4096;
-  if (newbutton != buttonid) {
-    if (program != NULL) {
-      if (newbutton > buttonid) {
-        Serial.println("Button: LEFT");
-        program->button(Button::LEFT);
-      } else {
-        Serial.println("Button: RIGHT");
-        program->button(Button::RIGHT);
-      }
-    }
-    buttonid = newbutton;
-  }
-
-  if (digitalRead(BUTTON_PIN) == 1) {
-    buttonPressed = true;
-  } else if (buttonPressed) {
-    buttonPressed = false;
-    programid = (programid + 1) % 3;
-    loadProgram();
-    
-    // AbstractAction * action = new Explosion();
-    // action->init(ledManager);
-    // ledManager->clearAll();
-    // while (action->run()) {
-    //   delay(25);
-    // }
-    // action->clear();
-    // delete action;
-    
-  }
-}
-
-void doInfraredReceive() {
+void readInfrared() {
   if (infrared.isnewmsg) {
     if (infrared.checkmsg()) {
       int data = infrared.getmsg();
       Serial.print("Infrared in: ");
       Serial.println(data);
-      time_last_irmsg = millis();
+      Button button = getButton(data);
+      if (button == Button::POUND) {
+        timeButtonPound = millis();
+      } else if (millis() < timeButtonPound + POUND_COOLDOWN) {
+        loadProgram(button);
+      } else {
+        if (program != NULL) {
+          program->button(button);
+        }
+      }
+      timeLastIrMsg = millis();
     }
   }
-  if (millis() > time_last_irmsg + ir_cooldown) {
-    attachInterrupt(PIN_IR_RECEIVER, ISR_infrared, CHANGE);
+  if (millis() > timeLastIrMsg + IR_COOLDOWN) {
+    attachInterrupt(IR_RECEIVE_PIN, ISR_infrared, CHANGE);
+  }
+}
+
+Button getButton(int infrared) {
+  switch (infrared) {
+    case 5: return Button::STAR;
+    case 0: return Button::POUND;
+    case 6: return Button::NUM_1;
+    case 3: return Button::NUM_2;
+    case 7: return Button::NUM_3;
+    case 4: return Button::NUM_4;
+    case 1: return Button::UP;
+    case 2: return Button::DOWN;
+    default:
+      return Button::NUM_0;
   }
 }

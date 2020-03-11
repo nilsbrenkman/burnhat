@@ -24,7 +24,7 @@ void Rainbow::doProgram(LedStrip * ledStrip) {
 
 void Rainbow::button(Button button) {
   switch (button) {
-    case Button::LEFT:
+    case Button::DOWN:
       if (direction == UP) {
         if (speed == 4) {
           Serial.println("Going DOWN");
@@ -38,7 +38,7 @@ void Rainbow::button(Button button) {
         }
       }
       break;
-    case Button::RIGHT:
+    case Button::UP:
       if (direction == DOWN) {
         if (speed == 4) {
           Serial.println("Going UP");

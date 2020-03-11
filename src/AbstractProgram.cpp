@@ -2,6 +2,7 @@
 
 void AbstractProgram::init(LedManager * lm) {
   ledManager = lm;
+  timeout = 0;
 }
 
 void AbstractProgram::loop() {
@@ -21,8 +22,7 @@ void AbstractProgram::button(Button button) {
 }
 
 bool AbstractProgram::doEvent(int delay) {
-  long now = millis();
-  if (timeout < now) {
+  if (timeout < millis()) {
     timeout = millis() + delay;
     return true;
   }
