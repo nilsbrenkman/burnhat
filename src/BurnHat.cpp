@@ -25,6 +25,7 @@ void ISR_infrared();
 void setup();
 void loop();
 void loadProgram(Button button);
+void runAction(Button button);
 void readInfrared();
 Button getButton(int infrared);
 #line 19 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
@@ -35,15 +36,16 @@ Button getButton(int infrared);
 const int IR_MSG_LENGTH   = 8;
 const int IR_CARRIER_FREQ = 38000;
 const int IR_COOLDOWN     = 100;
-const int POUND_COOLDOWN  = 2000;
+const int ACTION_COOLDOWN = 2000;
 
 LedManager * ledManager;
 AbstractProgram * program;
 afrored infrared(IR_MSG_LENGTH, IR_CARRIER_FREQ);
 void ISR_infrared() { infrared.ISR(); }
 
-system_tick_t timeLastIrMsg = 0;
-system_tick_t timeButtonPound = 0;
+system_tick_t timeLastIrMsg    = 0;
+system_tick_t timeButtonAction = 0;
+Button actionButton;
 
 void setup() {
   Serial.begin(9600);
@@ -87,6 +89,20 @@ void loadProgram(Button button) {
   }
 }
 
+void runAction(Button button) {
+  AbstractAction * action = NULL;
+  switch (button) {
+    case Button::NUM_1: action = new Explosion();   break;
+    default: return;
+  }
+  action->init(ledManager);
+  ledManager->clearAll();
+  while (action->run()) {
+    // keep going
+  }
+  action->clear();
+}
+
 void readInfrared() {
   if (infrared.isnewmsg) {
     if (infrared.checkmsg()) {
@@ -94,10 +110,15 @@ void readInfrared() {
       Serial.print("Infrared in: ");
       Serial.println(data);
       Button button = getButton(data);
-      if (button == Button::POUND) {
-        timeButtonPound = millis();
-      } else if (millis() < timeButtonPound + POUND_COOLDOWN) {
-        loadProgram(button);
+      if (button == Button::POUND || button == Button::STAR) {
+        timeButtonAction = millis();
+        actionButton = button;
+      } else if (millis() < timeButtonAction + ACTION_COOLDOWN) {
+        if (actionButton == Button::POUND) {
+          loadProgram(button);
+        } else if (actionButton == Button::STAR) {
+          runAction(button);
+        }
       } else {
         if (program != NULL) {
           program->button(button);

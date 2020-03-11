@@ -11,17 +11,19 @@ boolean Explosion::run() {
   active = false;
   ledManager->doAction(this);
   offset++;
+  delay(25);
   return active;
 }
 
 void Explosion::doAction(LedStrip * ledStrip) {
   int position = ledStrip->getPosition();
   for (int i = 0; i < ledStrip->getSize(); i++) {
-    int diffX = abs(originX - position);
+    int tempX = (originX + NUMBER_OF_LEDSTRIPS - position) % NUMBER_OF_LEDSTRIPS;
+    int diffX = 2 * min(tempX, NUMBER_OF_LEDSTRIPS - tempX);
     int diffY = abs(originY - i);
     double distance = sqrt(pow(diffX, 2) + pow(diffY, 2)) * 5;
     int hue = (offset - distance) * 3;
-    if (distance <= offset && hue < 72) {
+    if (distance <= offset && hue < 60) {
       ledStrip->setLedHue(i, hue);
       active = true;
     } else {
