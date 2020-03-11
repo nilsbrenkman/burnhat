@@ -6,12 +6,12 @@
 #define COLOR_ORDER BGR
 
 LedManager::LedManager() {
-  FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, 20)
+  FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, NUMBER_OF_LEDS)
          .setCorrection(TypicalLEDStrip);
   setBrightnessPersistent(1, false);
 
-  for (int i = 0; i < 20; i++) {
-    leds[i] = CRGB::Red;
+  for (int i = 0; i < NUMBER_OF_LEDS; i++) {
+    leds[i] = CRGB::Black;
   }
   FastLED.show();
 

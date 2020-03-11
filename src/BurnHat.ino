@@ -40,8 +40,11 @@ void setup() {
   ledManager = new LedManager();
   LedStrip * ledStrip;
 
-  ledStrip = new LedStrip(ledManager, 0, 0, 10, false);
-  ledStrip = new LedStrip(ledManager, 1, 10, 10, true);
+  bool reverse = true;
+  for (int i = 0; i < 8; i++) {
+    ledStrip = new LedStrip(ledManager, i, i * 8, 8, reverse);
+    reverse = ! reverse;
+  }
 
   loadProgram();
   program = new Rainbow();

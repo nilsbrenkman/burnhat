@@ -9,9 +9,9 @@
 
 FASTLED_USING_NAMESPACE;
 
-const int NUMBER_OF_LEDS        = 20;
-const int NUMBER_OF_LEDSTRIPS   = 2;
-const int MAX_LEDS_PER_LEDSTRIP = 10;
+const int NUMBER_OF_LEDS        = 64;
+const int NUMBER_OF_LEDSTRIPS   = 8;
+const int MAX_LEDS_PER_LEDSTRIP = 8;
 
 class LedStrip;
 class AbstractProgram;
