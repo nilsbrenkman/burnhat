@@ -3,19 +3,15 @@
 
 #include <math.h>
 #include "AbstractProgram.h"
-
-enum Direction {
-  UP,
-  DOWN
-};
+#include "Constants.h"
 
 class Rainbow : public AbstractProgram {
   public:
     Rainbow();
     void loop();
     void doProgram(LedStrip * ledStrip);
-    void clear();
     void button(Button button);
+    void clear();
   private:
     Direction direction;
     int offset;

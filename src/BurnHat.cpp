@@ -19,6 +19,7 @@
 #include "Rainbow.h"
 #include "Sparkle.h"
 #include "Randomised.h"
+#include "Snake.h"
 #include "Explosion.h"
 
 void ISR_infrared();
@@ -28,7 +29,7 @@ void loadProgram(Button button);
 void runAction(Button button);
 void readInfrared();
 Button getButton(int infrared);
-#line 19 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#line 20 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 #define BUTTON_PIN D2
 #define ROTARY_PIN A0
 #define IR_RECEIVE_PIN D7
@@ -82,6 +83,7 @@ void loadProgram(Button button) {
     case Button::NUM_1: program = new Rainbow();    break;
     case Button::NUM_2: program = new Sparkle();    break;
     case Button::NUM_3: program = new Randomised(); break;
+    case Button::NUM_4: program = new Snake();      break;
     default: break;
   }
   if (program != NULL) {

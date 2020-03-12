@@ -14,6 +14,7 @@
 #include "Rainbow.h"
 #include "Sparkle.h"
 #include "Randomised.h"
+#include "Snake.h"
 #include "Explosion.h"
 
 #define BUTTON_PIN D2
@@ -69,6 +70,7 @@ void loadProgram(Button button) {
     case Button::NUM_1: program = new Rainbow();    break;
     case Button::NUM_2: program = new Sparkle();    break;
     case Button::NUM_3: program = new Randomised(); break;
+    case Button::NUM_4: program = new Snake();      break;
     default: break;
   }
   if (program != NULL) {

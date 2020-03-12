@@ -47,15 +47,15 @@ void Sparkle::loop() {
   }
 }
 
-void Sparkle::clear() {
-  ledManager->clearAll();
-  delete this;
-}
-
 void Sparkle::button(Button button) {
   switch (button) {
     case Button::LEFT:  mode = (mode - 1) % 3; break;
     case Button::RIGHT: mode = (mode + 1) % 3; break;
     default: break;
   }
+}
+
+void Sparkle::clear() {
+  ledManager->clearAll();
+  delete this;
 }

@@ -4,13 +4,13 @@ Rainbow::Rainbow() {
   Serial.println("Rainbow started");
   offset = 0;
   speed = 2; // 0-4, 0 being fast
-  direction = UP;
+  direction = Direction::UP;
 }
 
 void Rainbow::loop() {
   if (doEvent(5 * pow(2, speed))) {
     ledManager->doProgram(this);
-    direction == UP ? offset++ : offset--;
+    direction == Direction::UP ? offset++ : offset--;
   }
 }
 
@@ -22,18 +22,13 @@ void Rainbow::doProgram(LedStrip * ledStrip) {
   }
 }
 
-void Rainbow::clear() {
-  ledManager->clearAll();
-  delete this;
-}
-
 void Rainbow::button(Button button) {
   switch (button) {
     case Button::DOWN:
-      if (direction == UP) {
+      if (direction == Direction::UP) {
         if (speed == 4) {
           Serial.println("Going DOWN");
-          direction = DOWN;
+          direction = Direction::DOWN;
         } else {
           speed++;
         }
@@ -44,10 +39,10 @@ void Rainbow::button(Button button) {
       }
       break;
     case Button::UP:
-      if (direction == DOWN) {
+      if (direction == Direction::DOWN) {
         if (speed == 4) {
           Serial.println("Going UP");
-          direction = UP;
+          direction = Direction::UP;
         } else {
           speed++;
         }
@@ -58,4 +53,9 @@ void Rainbow::button(Button button) {
       }
       break;
   }
+}
+
+void Rainbow::clear() {
+  ledManager->clearAll();
+  delete this;
 }
