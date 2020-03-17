@@ -1,9 +1,10 @@
 #include "Snake.h"
 
-#define HUE_START 200
-#define HUE_FOOD  63
+#define HUE_START 160
+#define HUE_END   128
+#define HUE_FOOD  64
 #define HUE_FAIL  0
-#define HUE_WIN   127
+#define HUE_WIN   96
 
 Snake::Snake() {
   Serial.println("Snake started");
@@ -36,8 +37,8 @@ void Snake::button(Button button) {
   switch (button) {
     case Button::UP:    direction = Direction::UP;    break;
     case Button::DOWN:  direction = Direction::DOWN;  break;
-    case Button::NUM_3: direction = Direction::LEFT;  break;
-    case Button::NUM_4: direction = Direction::RIGHT; break;
+    case Button::LEFT:  direction = Direction::LEFT;  break;
+    case Button::RIGHT: direction = Direction::RIGHT; break;
     default: break;
   }
 }
@@ -71,6 +72,9 @@ void Snake::move() {
   Serial.println("Move");
   snake.pop_front();
   pushHead();
+  snake.shrink_to_fit();
+  setHue();
+
   ledManager->clearAll();
   ledManager->doProgram(this);
 }
@@ -78,6 +82,7 @@ void Snake::move() {
 void Snake::eat() {
   Serial.println("Eat");
   pushHead();
+  setHue();
 
   food.x = rand() % NUMBER_OF_LEDSTRIPS;
   food.y = rand() % MAX_LEDS_PER_LEDSTRIP;
@@ -115,16 +120,15 @@ void Snake::reset() {
 
   food.x = rand() % NUMBER_OF_LEDSTRIPS;
   food.y = rand() % MAX_LEDS_PER_LEDSTRIP;
-  food.hue = HUE_FOOD;
+  food.hue = HUE_YELLOW;
 
-  Position start;
   head.x = 0;
   head.y = MAX_LEDS_PER_LEDSTRIP / 2;
   head.hue = HUE_START;
   pushHead();
+  snake.shrink_to_fit();
 
   direction = Direction::RIGHT;
-
 }
 
 void Snake::calculateHead() {
@@ -136,7 +140,7 @@ void Snake::calculateHead() {
       head.y--;
       break;
     case Direction::LEFT:
-      head.x = (head.x - 1) % NUMBER_OF_LEDSTRIPS;
+      head.x = (head.x - 1 + NUMBER_OF_LEDSTRIPS) % NUMBER_OF_LEDSTRIPS;
       break;
     case Direction::RIGHT:
       head.x = (head.x + 1) % NUMBER_OF_LEDSTRIPS;
@@ -145,11 +149,7 @@ void Snake::calculateHead() {
 }
 
 void Snake::pushHead() {
-  Position push;
-  push.x = head.x;
-  push.y = head.y;
-  push.hue = HUE_START;
-  snake.push_back(push);
+  snake.push_back({head.x, head.y, HUE_START});
 }
 
 bool Snake::collision(Position * a, Position * b) {
@@ -163,4 +163,15 @@ bool Snake::collisionWithSnake(Position * p) {
     }
   }
   return false;
+}
+
+void Snake::setHue() {
+  int hue = HUE_START;
+  for (auto it = snake.rbegin(); it != snake.rend(); it++) {
+    it->hue = hue;
+    if (hue > HUE_END) {
+      hue = hue - 4;
+    }
+  }
+
 }

@@ -56,7 +56,8 @@
 			"utility": "cpp",
 			"typeinfo": "cpp",
 			"string": "cpp",
-			"iterator": "cpp"
+			"iterator": "cpp",
+			"__functional_base": "cpp"
 		}
 	}
 }

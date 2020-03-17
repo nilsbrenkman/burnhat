@@ -21,7 +21,9 @@ enum class Button {
   UP,
   DOWN,
   LEFT,
-  RIGHT
+  RIGHT,
+  OK,
+  NONE
 };
 
 enum class Direction {

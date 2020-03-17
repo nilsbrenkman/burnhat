@@ -5,11 +5,17 @@
 #include "AbstractProgram.h"
 #include "Constants.h"
 
-struct Position {
+typedef struct Position {
+  Position() {}
+  Position(int a, int b, int c) {
+    x = a;
+    y = b;
+    hue = c;
+  }
   int x;
   int y;
   int hue;
-};
+} Position;
 
 enum class Action {
   Move,
@@ -36,6 +42,7 @@ class Snake : public AbstractProgram {
     void pushHead();
     bool collision(Position * a, Position * b);
     bool collisionWithSnake(Position * p);
+    void setHue();
     std::deque<Position> snake;
     Direction direction;
     Position food;
