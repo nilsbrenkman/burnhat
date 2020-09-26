@@ -7,9 +7,9 @@
 class Explosion : public AbstractAction {
   public:
     Explosion();
+    ~Explosion() {}
     boolean run();
     void doAction(LedStrip * ledStrip);
-    void clear();
   private:
     int originX;
     int originY;

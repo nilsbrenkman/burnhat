@@ -1,7 +1,9 @@
 #include "Sparkle.h"
 
 Sparkle::Sparkle() {
-  Serial.println("Sparkle started");
+  if (debug) {
+    Serial.println("Sparkle started");
+  }
   state = 0; // waiting for next Sparkle
   mode = 0;
   timeout = 0;
@@ -53,9 +55,4 @@ void Sparkle::button(Button button) {
     case Button::RIGHT: mode = (mode + 1) % 3; break;
     default: break;
   }
-}
-
-void Sparkle::clear() {
-  ledManager->clearAll();
-  delete this;
 }

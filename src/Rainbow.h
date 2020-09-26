@@ -8,10 +8,10 @@
 class Rainbow : public AbstractProgram {
   public:
     Rainbow();
+    ~Rainbow() {}
     void loop();
     void doProgram(LedStrip * ledStrip);
     void button(Button button);
-    void clear();
   private:
     Direction direction;
     int offset;

@@ -11,15 +11,15 @@ class LedStrip;
 
 class AbstractProgram {
   public:
+    virtual ~AbstractProgram() {}
     void init(LedManager * ledManager);
     virtual void loop();
     virtual void doProgram(LedStrip * ledStrip);
     virtual void button(Button button);
-    virtual void clear();
   protected:
     bool doEvent(int delay);
     LedManager * ledManager;
-    long timeout;
+    uint32_t timeout;
 };
 
 #endif

@@ -1,7 +1,9 @@
 #include "Explosion.h"
 
 Explosion::Explosion() {
-  Serial.println("Explosion started");
+  if (debug) {
+    Serial.println("Explosion started");
+  }
   originX = rand() % NUMBER_OF_LEDSTRIPS;
   originY = rand() % (MAX_LEDS_PER_LEDSTRIP - 4) + 2;
   offset = 0;
@@ -30,9 +32,4 @@ void Explosion::doAction(LedStrip * ledStrip) {
       ledStrip->setLedColor(i, CRGB::Black);
     }
   }
-}
-
-void Explosion::clear() {
-  ledManager->clearAll();
-  delete this;
 }

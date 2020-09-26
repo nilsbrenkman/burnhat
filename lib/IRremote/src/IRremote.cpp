@@ -411,58 +411,7 @@ int IRrecv::decode(decode_results *results) {
   if (irparams.rcvstate != STATE_STOP) {
     return ERR;
   }
-#if(DEBUG)
-  Serial.println("Attempting NEC decode");
-#endif
   if (decodeNEC(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-  Serial.println("Attempting Sony decode");
-#endif
-  if (decodeSony(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-  Serial.println("Attempting Sanyo decode");
-#endif
-  if (decodeSanyo(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-  Serial.println("Attempting Mitsubishi decode");
-#endif
-  if (decodeMitsubishi(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-  Serial.println("Attempting RC5 decode");
-#endif
-  if (decodeRC5(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-  Serial.println("Attempting RC6 decode");
-#endif
-  if (decodeRC6(results)) {
-    return DECODED;
-  }
-#if(DEBUG)
-    Serial.println("Attempting Panasonic decode");
-#endif
-    if (decodePanasonic(results)) {
-        return DECODED;
-    }
-#if(DEBUG)
-    Serial.println("Attempting JVC decode");
-#endif
-    if (decodeJVC(results)) {
-        return DECODED;
-    }
-  // decodeHash returns a hash on any input.
-  // Thus, it needs to be last in the list.
-  // If you add any decodes, add them before this.
-  if (decodeHash(results)) {
     return DECODED;
   }
   // Throw away and start over
@@ -483,10 +432,11 @@ long IRrecv::decodeNEC(decode_results *results) {
   if (irparams.rawlen == 4 &&
     MATCH_SPACE(results->rawbuf[offset], NEC_RPT_SPACE) &&
     MATCH_MARK(results->rawbuf[offset+1], NEC_BIT_MARK)) {
-    results->bits = 0;
-    results->value = REPEAT;
-    results->decode_type = NEC;
-    return DECODED;
+    // results->bits = 0;
+    // results->value = REPEAT;
+    // results->decode_type = NEC;
+    // return DECODED;
+    return ERR;
   }
   if (irparams.rawlen < 2 * NEC_BITS + 4) {
     return ERR;

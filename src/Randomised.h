@@ -6,9 +6,9 @@
 class Randomised : public AbstractProgram {
   public:
     Randomised();
+    ~Randomised() {}
     void loop();
     void doProgram(LedStrip * ledStrip);
-    void clear();
   private:
     int offset;
 };

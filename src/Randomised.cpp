@@ -17,8 +17,3 @@ void Randomised::doProgram(LedStrip * ledStrip) {
   int led = rand() % ledStrip->getSize();
   ledStrip->setLedHue(led, hue);
 }
-
-void Randomised::clear() {
-  ledManager->clearAll();
-  delete this;
-}

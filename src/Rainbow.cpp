@@ -1,7 +1,9 @@
 #include "Rainbow.h"
 
 Rainbow::Rainbow() {
-  Serial.println("Rainbow started");
+  if (debug) {
+    Serial.println("Rainbow started");
+  }
   offset = 0;
   speed = 2; // 0-4, 0 being fast
   direction = Direction::UP;
@@ -27,7 +29,9 @@ void Rainbow::button(Button button) {
     case Button::DOWN:
       if (direction == Direction::UP) {
         if (speed == 4) {
-          Serial.println("Going DOWN");
+          if (debug) {
+            Serial.println("Going DOWN");
+          }
           direction = Direction::DOWN;
         } else {
           speed++;
@@ -41,7 +45,9 @@ void Rainbow::button(Button button) {
     case Button::UP:
       if (direction == Direction::DOWN) {
         if (speed == 4) {
-          Serial.println("Going UP");
+          if (debug) {
+            Serial.println("Going UP");
+          }
           direction = Direction::UP;
         } else {
           speed++;
@@ -53,9 +59,4 @@ void Rainbow::button(Button button) {
       }
       break;
   }
-}
-
-void Rainbow::clear() {
-  ledManager->clearAll();
-  delete this;
 }

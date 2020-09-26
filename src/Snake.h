@@ -27,10 +27,10 @@ enum class Action {
 class Snake : public AbstractProgram {
   public:
     Snake();
+    ~Snake() {}
     void loop();
     void doProgram(LedStrip * ledStrip);
     void button(Button button);
-    void clear();
   private:
     Action calculateAction();
     void move();

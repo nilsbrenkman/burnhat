@@ -5,7 +5,7 @@ void AbstractAction::init(LedManager * lm) {
 }
 
 boolean AbstractAction::run() {
-  // do nothing
+  return false;
 }
 
 void AbstractAction::doAction(LedStrip * ledStrip) {

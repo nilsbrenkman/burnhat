@@ -11,10 +11,10 @@ class LedStrip;
 
 class AbstractAction {
   public:
+    virtual ~AbstractAction() {}
     void init(LedManager * ledManager);
     virtual boolean run();
     virtual void doAction(LedStrip * ledStrip);
-    virtual void clear();
   protected:
     LedManager * ledManager;
 };
