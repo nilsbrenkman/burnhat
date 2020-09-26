@@ -1,9 +1,7 @@
 #include "Sparkle.h"
 
 Sparkle::Sparkle() {
-  if (debug) {
-    Serial.println("Sparkle started");
-  }
+  if (debug) Serial.println("Sparkle started");
   state = 0; // waiting for next Sparkle
   mode = 0;
   timeout = 0;

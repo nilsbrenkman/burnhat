@@ -7,9 +7,7 @@
 #define HUE_WIN   96
 
 Snake::Snake() {
-  if (debug) {
-    Serial.println("Snake started");
-  }
+  if (debug) Serial.println("Snake started");
   reset();
 }
 
@@ -66,9 +64,7 @@ Action Snake::calculateAction() {
 }
 
 void Snake::move() {
-  if (debug) {
-    Serial.println("Move");
-  }
+  if (debug) Serial.println("Move");
   snake.pop_front();
   pushHead();
   snake.shrink_to_fit();
@@ -79,9 +75,7 @@ void Snake::move() {
 }
 
 void Snake::eat() {
-  if (debug) {
-    Serial.println("Eat");
-  }
+  if (debug) Serial.println("Eat");
   pushHead();
   setHue();
 
@@ -93,9 +87,7 @@ void Snake::eat() {
 }
 
 void Snake::fail() {
-  if (debug) {
-    Serial.println("Fail");
-  }
+  if (debug) Serial.println("Fail");
   for (auto it = snake.begin(); it != snake.end(); it++) {
     it->hue = HUE_FAIL;
   }
@@ -106,9 +98,7 @@ void Snake::fail() {
 }
 
 void Snake::win() {
-  if (debug) {
-    Serial.println("Win");
-  }
+  if (debug) Serial.println("Win");
   for (auto it = snake.begin(); it != snake.end(); it++) {
     it->hue = HUE_WIN;
   }
@@ -119,9 +109,7 @@ void Snake::win() {
 }
 
 void Snake::reset() {
-  if (debug) {
-    Serial.println("Reset");
-  }
+  if (debug) Serial.println("Reset");
   ledManager->clearAll();
   snake.clear();
 

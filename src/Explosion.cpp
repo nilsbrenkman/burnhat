@@ -1,9 +1,7 @@
 #include "Explosion.h"
 
 Explosion::Explosion() {
-  if (debug) {
-    Serial.println("Explosion started");
-  }
+  if (debug) Serial.println("Explosion started");
   originX = rand() % NUMBER_OF_LEDSTRIPS;
   originY = rand() % (MAX_LEDS_PER_LEDSTRIP - 4) + 2;
   offset = 0;

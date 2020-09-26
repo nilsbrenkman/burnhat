@@ -16,6 +16,8 @@
 #include "Randomised.h"
 #include "Snake.h"
 #include "Explosion.h"
+#include "Around.h"
+#include "UpDown.h"
 
 void setup();
 void loop();
@@ -81,6 +83,8 @@ void runAction(Button button) {
   AbstractAction * action = NULL;
   switch (button) {
     case Button::NUM_1: action = new Explosion();   break;
+    case Button::NUM_2: action = new Around();      break;
+    case Button::NUM_3: action = new UpDown();      break;
     default: return;
   }
   action->init(ledManager);

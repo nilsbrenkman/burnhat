@@ -21,9 +21,11 @@
 #include "Randomised.h"
 #include "Snake.h"
 #include "Explosion.h"
+#include "Around.h"
+#include "UpDown.h"
 
 Button getButton(long value);
-#line 20 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
+#line 22 "/Users/nils/Projects/Git/BurnHat/src/BurnHat.ino"
 void setup();
 void loop();
 void loadProgram(Button button);
@@ -88,6 +90,8 @@ void runAction(Button button) {
   AbstractAction * action = NULL;
   switch (button) {
     case Button::NUM_1: action = new Explosion();   break;
+    case Button::NUM_2: action = new Around();      break;
+    case Button::NUM_3: action = new UpDown();      break;
     default: return;
   }
   action->init(ledManager);

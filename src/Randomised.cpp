@@ -1,6 +1,7 @@
 #include "Randomised.h"
 
 Randomised::Randomised() {
+  if (debug) Serial.println("Randomised started");
   offset = 0;
 }
 
