@@ -3,6 +3,16 @@
 
 #include "FastLED.h"
 
+#define BUZZER_PIN     D6
+#define IR_RECEIVE_PIN D7
+#define LED_DATA_PIN   RX
+#define LED_CLOCK_PIN  TX
+
+const int IR_MSG_LENGTH   = 8;
+const int IR_CARRIER_FREQ = 38000;
+const int IR_COOLDOWN     = 100;
+const int ACTION_COOLDOWN = 2000;
+
 static const bool debug = true;
 
 FASTLED_USING_NAMESPACE;

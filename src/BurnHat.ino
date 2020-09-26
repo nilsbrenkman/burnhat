@@ -24,15 +24,6 @@ void runAction(Button button);
 void readInfrared();
 Button getButton(long infrared);
 
-#define BUTTON_PIN D2
-#define ROTARY_PIN A0
-#define IR_RECEIVE_PIN D7
-
-const int IR_MSG_LENGTH   = 8;
-const int IR_CARRIER_FREQ = 38000;
-const int IR_COOLDOWN     = 100;
-const int ACTION_COOLDOWN = 2000;
-
 LedManager * ledManager;
 AbstractProgram * program;
 
@@ -46,7 +37,7 @@ Button actionButton;
 void setup() {
   Serial.begin(9600);
 
-  pinMode(BUTTON_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
 
   irrecv.enableIRIn();
 
@@ -105,16 +96,8 @@ void readInfrared() {
   if (irrecv.decode(&results)) {
     Button button = getButton(results.value);
     if (button == Button::NONE) {
-      if (debug) {
-        Serial.print("Unknown IR: ");
-        Serial.println(results.value, HEX);
-      }
       irrecv.resume(); // Receive the next value
       return;
-    }
-    if (debug) {
-      Serial.print("Button IR: ");
-      Serial.println(results.value, HEX);
     }
     if (button == Button::POUND || button == Button::STAR || button == Button::OK) {
       timeButtonAction = millis();
@@ -142,11 +125,22 @@ void readInfrared() {
   }
 }
 
-Button getButton(long infrared) {
+Button getButton(long value) {
   for (const auto button : BUTTONS) {
-    if (infrared == (long) button) {
+    if (value == (long) button) {
+      if (debug) {
+        Serial.print("Button IR: ");
+        Serial.println(value, HEX);
+      }
+      digitalWrite(BUZZER_PIN, HIGH);
+      delay(25);
+      digitalWrite(BUZZER_PIN, LOW);
       return button;
     }
+  }
+  if (debug) {
+    Serial.print("Unknown IR: ");
+    Serial.println(value, HEX);
   }
   return Button::NONE;
 }

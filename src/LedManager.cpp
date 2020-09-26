@@ -1,12 +1,10 @@
 #include "LedManager.h"
 
 #define CHIPSET APA102
-#define DATA_PIN RX
-#define CLOCK_PIN TX
 #define COLOR_ORDER BGR
 
 LedManager::LedManager() {
-  FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, NUMBER_OF_LEDS)
+  FastLED.addLeds<CHIPSET, LED_DATA_PIN, LED_CLOCK_PIN, COLOR_ORDER, DATA_RATE_MHZ(2)>(leds, NUMBER_OF_LEDS)
          .setCorrection(TypicalLEDStrip);
   setBrightnessPersistent(1, false);
 
