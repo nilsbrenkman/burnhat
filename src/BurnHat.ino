@@ -6,7 +6,6 @@
  */
 
 #include "application.h"
-#include "afrored.h"
 #include "IRremote.h"
 #include "LedManager.h"
 #include "AbstractProgram.h"
@@ -117,7 +116,7 @@ void readInfrared() {
       Serial.print("Button IR: ");
       Serial.println(results.value, HEX);
     }
-    if (button == Button::POUND || button == Button::STAR) {
+    if (button == Button::POUND || button == Button::STAR || button == Button::OK) {
       timeButtonAction = millis();
       actionButton = button;
     } else if (millis() < timeButtonAction + ACTION_COOLDOWN) {
@@ -125,6 +124,14 @@ void readInfrared() {
         loadProgram(button);
       } else if (actionButton == Button::STAR) {
         runAction(button);
+      } else if (actionButton == Button::OK) {
+        if (button == Button::DOWN) {
+          ledManager->setBrightnessPersistent(-1, true);
+          timeButtonAction = millis();
+        } else if (button == Button::UP) {
+          ledManager->setBrightnessPersistent(1, true);
+          timeButtonAction = millis();
+        }
       }
     } else {
       if (program != NULL) {

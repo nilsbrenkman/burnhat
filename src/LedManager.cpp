@@ -14,7 +14,6 @@ LedManager::LedManager() {
     leds[i] = CRGB::Black;
   }
   FastLED.show();
-
 }
 
 void LedManager::setLedStrip(int i, LedStrip * ls) {
@@ -50,8 +49,10 @@ void LedManager::setBrightnessPersistent(int b, bool relative) {
     return;
   }
   brightness = newBrightness;
-  Serial.print("brightness: ");
-  Serial.println(brightness);
+  if (debug) {
+    Serial.print("Brightness: ");
+    Serial.println(brightness);
+  }
   setBrightness( pow((brightness / 5.0), 2) * 255 );
   FastLED.show();
 }
