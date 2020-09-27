@@ -15,6 +15,7 @@
 #include "Sparkle.h"
 #include "Randomised.h"
 #include "Snake.h"
+#include "SingleColor.h"
 #include "Explosion.h"
 #include "Around.h"
 #include "UpDown.h"
@@ -68,10 +69,11 @@ void loadProgram(Button button) {
     program = NULL;
   }
   switch (button) {
-    case Button::NUM_1: program = new Rainbow();    break;
-    case Button::NUM_2: program = new Sparkle();    break;
-    case Button::NUM_3: program = new Randomised(); break;
-    case Button::NUM_4: program = new Snake();      break;
+    case Button::NUM_1: program = new Rainbow();     break;
+    case Button::NUM_2: program = new Sparkle();     break;
+    case Button::NUM_3: program = new Randomised();  break;
+    case Button::NUM_4: program = new Snake();       break;
+    case Button::NUM_5: program = new SingleColor(); break;
     default: break;
   }
   if (program != NULL) {
@@ -82,9 +84,9 @@ void loadProgram(Button button) {
 void runAction(Button button) {
   AbstractAction * action = NULL;
   switch (button) {
-    case Button::NUM_1: action = new Explosion();   break;
-    case Button::NUM_2: action = new Around();      break;
-    case Button::NUM_3: action = new UpDown();      break;
+    case Button::NUM_1: action = new Explosion();    break;
+    case Button::NUM_2: action = new Around();       break;
+    case Button::NUM_3: action = new UpDown();       break;
     default: return;
   }
   action->init(ledManager);

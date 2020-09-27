@@ -13,6 +13,7 @@ class AbstractProgram {
   public:
     virtual ~AbstractProgram() {}
     void init(LedManager * ledManager);
+    virtual void afterInit();
     virtual void loop();
     virtual void doProgram(LedStrip * ledStrip);
     virtual void button(Button button);

@@ -3,6 +3,11 @@
 void AbstractProgram::init(LedManager * lm) {
   ledManager = lm;
   timeout = 0;
+  afterInit();
+}
+
+void AbstractProgram::afterInit() {
+  // do nothing
 }
 
 void AbstractProgram::loop() {

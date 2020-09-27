@@ -55,16 +55,23 @@ void LedManager::setBrightnessPersistent(int b, bool relative) {
   FastLED.show();
 }
 
-void LedManager::setAllLeds(CRGB color) {
+void LedManager::setAllColor(CRGB color) {
   for (int i = 0; i < NUMBER_OF_LEDS; i++) {
     setLedColor(i, color);
   }
+  FastLED.show();
+}
+
+void LedManager::setAllHue(int hue) {
+  for (int i = 0; i < NUMBER_OF_LEDS; i++) {
+    setLedHue(i, hue);
+  }
+  FastLED.show();
 }
 
 void LedManager::clearAll() {
   setBrightness( pow((brightness / 5.0), 2) * 255 );
-  setAllLeds(CRGB::Black);
-  FastLED.show();
+  setAllColor(CRGB::Black);
 }
 
 void LedManager::doProgram(AbstractProgram * program) {

@@ -47,6 +47,29 @@ enum class Direction {
   RIGHT
 };
 
+enum Hue : int {
+  RED    =   0,
+  ORANGE =  41,
+  YELLOW =  69,
+  GREEN  = 105,
+  BLUE   = 167,
+  PURPLE = 189
+};
+
+static const int HUE_MOD = 256;
+
+class HueTool {
+  public:
+    static int add(int hue, int diff) {
+      int i = hue + diff;
+      while (i < 0) {
+        i = i + HUE_MOD;
+      }
+      return i % HUE_MOD;
+    }
+};
+
+
 static const CRGB myOrange = blend(CRGB::Orange, CRGB::Red, 100);
 
 static const CRGB COLOR_SCHEME_RED[3] =  {CRGB::Red, myOrange, CRGB::Yellow};

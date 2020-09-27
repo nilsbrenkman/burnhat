@@ -26,7 +26,8 @@ class LedManager {
     void setLedHue(int led, int hue);
     void setBrightness(int b);
     void setBrightnessPersistent(int b, bool relative);
-    void setAllLeds(CRGB color);
+    void setAllColor(CRGB color);
+    void setAllHue(int hue);
     void clearAll();
     void doProgram(AbstractProgram * program);
     void doAction(AbstractAction * action);

@@ -57,7 +57,8 @@
 			"typeinfo": "cpp",
 			"string": "cpp",
 			"iterator": "cpp",
-			"__functional_base": "cpp"
+			"__functional_base": "cpp",
+			"random": "cpp"
 		}
 	}
 }

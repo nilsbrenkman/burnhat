@@ -4,7 +4,7 @@ UpDown::UpDown() {
   if (debug) Serial.println("UpDown started");
   direction = Direction::UP;
   position = 0;
-  hue = 0;
+  hue = Hue::RED;
 }
 
 boolean UpDown::run() {
@@ -25,7 +25,7 @@ boolean UpDown::run() {
       }
   }
   hue = hue + hueDiff;
-  boolean done = position == 0 && hue > 213 - (MAX_LEDS_PER_LEDSTRIP * 2 * hueDiff);
+  boolean done = position == 0 && hue > Hue::PURPLE - (MAX_LEDS_PER_LEDSTRIP * 2 * hueDiff);
   delay(25);
   return ! done;
 }

@@ -3,7 +3,7 @@
 Around::Around() {
   if (debug) Serial.println("Around started");
   position = 0;
-  hue = 0;
+  hue = Hue::RED;
 }
 
 boolean Around::run() {
@@ -11,7 +11,7 @@ boolean Around::run() {
   position = (position + 1) % NUMBER_OF_LEDSTRIPS;
   hue = hue + hueDiff;
   delay(25);
-  boolean done = position == 0 && hue > 213 - (NUMBER_OF_LEDSTRIPS * hueDiff);
+  boolean done = position == 0 && hue > Hue::PURPLE - (NUMBER_OF_LEDSTRIPS * hueDiff);
   return ! done;
 }
 
