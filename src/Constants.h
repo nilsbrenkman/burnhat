@@ -7,6 +7,9 @@
 #define IR_RECEIVE_PIN D7
 #define LED_DATA_PIN   RX
 #define LED_CLOCK_PIN  TX
+#define EQ_RESET_PIN   D1
+#define EQ_STROBE_PIN  D0
+#define EQ_ANALOG_PIN  A0
 
 const int IR_MSG_LENGTH   = 8;
 const int IR_CARRIER_FREQ = 38000;

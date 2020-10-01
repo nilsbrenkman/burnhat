@@ -16,6 +16,7 @@
 #include "Randomised.h"
 #include "Snake.h"
 #include "SingleColor.h"
+#include "Equalizer.h"
 #include "Explosion.h"
 #include "Around.h"
 #include "UpDown.h"
@@ -74,6 +75,7 @@ void loadProgram(Button button) {
     case Button::NUM_3: program = new Randomised();  break;
     case Button::NUM_4: program = new Snake();       break;
     case Button::NUM_5: program = new SingleColor(); break;
+    case Button::NUM_6: program = new Equalizer();   break;
     default: break;
   }
   if (program != NULL) {
