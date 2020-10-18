@@ -16,7 +16,7 @@ const int IR_CARRIER_FREQ = 38000;
 const int IR_COOLDOWN     = 100;
 const int ACTION_COOLDOWN = 2000;
 
-static const bool debug = true;
+static const bool debug = false;
 
 FASTLED_USING_NAMESPACE;
 
@@ -52,11 +52,11 @@ enum class Direction {
 
 enum Hue : int {
   RED    =   0,
-  ORANGE =  41,
-  YELLOW =  69,
-  GREEN  = 105,
-  BLUE   = 167,
-  PURPLE = 189
+  ORANGE =  32,
+  YELLOW =  72,
+  GREEN  =  96,
+  BLUE   = 164,
+  PURPLE = 192
 };
 
 static const int HUE_MOD = 256;

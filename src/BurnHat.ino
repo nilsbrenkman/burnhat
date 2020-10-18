@@ -71,11 +71,9 @@ void loadProgram(Button button) {
   }
   switch (button) {
     case Button::NUM_1: program = new Rainbow();     break;
-    case Button::NUM_2: program = new Sparkle();     break;
-    case Button::NUM_3: program = new Randomised();  break;
+    case Button::NUM_2: program = new Randomised();  break;
+    case Button::NUM_3: program = new Equalizer();   break;
     case Button::NUM_4: program = new Snake();       break;
-    case Button::NUM_5: program = new SingleColor(); break;
-    case Button::NUM_6: program = new Equalizer();   break;
     default: break;
   }
   if (program != NULL) {
@@ -86,9 +84,9 @@ void loadProgram(Button button) {
 void runAction(Button button) {
   AbstractAction * action = NULL;
   switch (button) {
-    case Button::NUM_1: action = new Explosion();    break;
-    case Button::NUM_2: action = new Around();       break;
-    case Button::NUM_3: action = new UpDown();       break;
+    case Button::NUM_7: action = new Explosion();    break;
+    case Button::NUM_8: action = new Around();       break;
+    case Button::NUM_9: action = new UpDown();       break;
     default: return;
   }
   action->init(ledManager);
@@ -124,6 +122,10 @@ void readInfrared() {
           timeButtonAction = millis();
         }
       }
+    } else if (button == Button::NUM_1 || button == Button::NUM_2 || button == Button::NUM_3 || button == Button::NUM_4) {
+      loadProgram(button);
+    } else if (button == Button::NUM_7 || button == Button::NUM_8 || button == Button::NUM_9) {
+      runAction(button);
     } else {
       if (program != NULL) {
         program->button(button);
@@ -141,7 +143,7 @@ Button getButton(long value) {
         Serial.println(value, HEX);
       }
       digitalWrite(BUZZER_PIN, HIGH);
-      delay(25);
+      delay(100);
       digitalWrite(BUZZER_PIN, LOW);
       return button;
     }
