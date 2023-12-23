@@ -1,2 +1,6 @@
 target
 *.bin
+GerberFiles_pcb/
+net.osm
+pcb.osm
+prijslijst.numbers

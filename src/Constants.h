@@ -16,7 +16,7 @@ const int IR_CARRIER_FREQ = 38000;
 const int IR_COOLDOWN     = 100;
 const int ACTION_COOLDOWN = 2000;
 
-static const bool debug = false;
+static const bool debug = true;
 
 FASTLED_USING_NAMESPACE;
 
