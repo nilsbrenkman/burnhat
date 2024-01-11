@@ -1,0 +1,3 @@
+CubeController::CubeController() {
+  
+}
