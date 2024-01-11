@@ -6,11 +6,7 @@
  */
 
 #include "application.h"
-#invlude "CubeController.h"
-
-#define LED_DATA_PIN   RX
-#define LED_CLOCK_PIN  TX
-#define LED_LATCH_PIN  A7
+#include "CubeController.h"
 
 void setup();
 void loop();
